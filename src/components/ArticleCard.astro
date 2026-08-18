@@ -12,20 +12,35 @@ const formattedDate = new Date(date).toLocaleDateString('en-US', {
 });
 ---
 
-<a href={`/writing/${entry.slug}`} class="article-card">
-  <div class="card-top">
+<a href={`/writing/${entry.slug}`} class={`article-card ${coverImage ? 'has-image' : 'no-image'}`}>
+  <div class="card-text">
     <p class="eyebrow">{category}</p>
     <h4 class="title">{title}</h4>
     <p class="excerpt">{description}</p>
+    <p class="meta">{readingTime} &middot; {platform} &middot; {formattedDate}</p>
   </div>
-  <p class="meta">{readingTime} &middot; {platform} &middot; {formattedDate}</p>
+  {coverImage && (
+    <div class="card-thumb">
+      <img src={coverImage} alt="" loading="lazy" />
+    </div>
+  )}
 </a>
 
 <style>
   .article-card {
-    display: block;
+    display: grid;
+    gap: 24px;
     padding: 28px 0;
     border-top: 1px solid var(--hairline);
+    align-items: center;
+  }
+
+  .article-card.has-image {
+    grid-template-columns: 1fr 180px;
+  }
+
+  .article-card.no-image {
+    grid-template-columns: 1fr;
   }
 
   .title {
@@ -43,7 +58,28 @@ const formattedDate = new Date(date).toLocaleDateString('en-US', {
     max-width: 56ch;
   }
 
+  .card-thumb img {
+    width: 180px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 3px;
+    background: var(--hairline);
+  }
+
   .article-card:hover .title {
     color: var(--accent);
+  }
+
+  @media (max-width: 560px) {
+    .article-card.has-image {
+      grid-template-columns: 1fr;
+    }
+    .card-thumb {
+      order: -1;
+    }
+    .card-thumb img {
+      width: 100%;
+      height: 180px;
+    }
   }
 </style>

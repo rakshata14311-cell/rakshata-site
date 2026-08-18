@@ -2,21 +2,19 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Contact" description="Get in touch with Rakshita Mulimani.">
-  <section class="wrap reading-column placeholder-section">
+<BaseLayout title="Contact" description="Get in touch with Rakshata.">
+  <section class="wrap reading-column contact-page">
     <h1>Contact</h1>
-    <p class="placeholder-note">Placeholder — needs your real email address and LinkedIn URL before this goes live. Currently just a shell.</p>
-    <hr class="hairline" />
-    <p class="intro-text">Have an idea, project, or interesting question?</p>
+    <p class="intro-text">Want to talk about writing, storytelling, content, or some interesting idea that won't leave you alone? I'd like to hear it.</p>
     <div class="contact-links">
-      <a href="mailto:hello@example.com">Email</a>
-      <a href="#">LinkedIn</a>
+      <a href="mailto:rakshata14311@gmail.com">rakshata14311@gmail.com</a>
+      <a href="https://www.linkedin.com/in/rakshata-mulimani-b79439215/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .placeholder-section {
+  .contact-page {
     padding: 56px 0 96px;
   }
 
@@ -25,32 +23,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin-bottom: 24px;
   }
 
-  .placeholder-note {
-    font-family: var(--font-sans);
-    font-size: 13px;
-    color: var(--accent);
-    background: var(--accent-tint);
-    padding: 16px 20px;
-    border-radius: 3px;
-    line-height: 1.6;
-    margin-bottom: 32px;
-  }
-
   .intro-text {
     font-family: var(--font-serif);
     font-size: 22px;
-    margin: 24px 0 20px;
+    line-height: 1.5;
+    margin-bottom: 32px;
+    max-width: 30ch;
   }
 
   .contact-links {
     display: flex;
-    gap: 24px;
+    flex-direction: column;
+    gap: 14px;
   }
 
   .contact-links a {
     font-family: var(--font-sans);
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     color: var(--accent);
+    width: fit-content;
+    border-bottom: 1px solid transparent;
+  }
+
+  .contact-links a:hover {
+    border-bottom-color: var(--accent);
   }
 </style>

@@ -2,40 +2,74 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="About" description="About Rakshita Mulimani.">
-  <section class="wrap reading-column placeholder-section">
+<BaseLayout title="About" description="About Rakshata — writer, overthinker, and short-form specialist with a tendency toward 2000-word tangents.">
+  <section class="wrap reading-column about-page">
     <h1>About</h1>
-    <p class="placeholder-note">This page is a placeholder. It's due for Phase 9 — it needs your actual voice: who you are, what you write about, why, and what you're curious about. Nothing invented sits here on purpose.</p>
-    <hr class="hairline" />
-    <p class="draft-text">Rakshita Mulimani is a writer and copywriter. More coming soon.</p>
+
+    <div class="about-body">
+      <p>I'm Rakshata. I write essays, stories, and the occasional cultural autopsy — mostly about books, movies, memes, and whatever else has been rattling around my head.</p>
+
+      <p>A few things worth knowing:</p>
+
+      <ul class="quirk-list">
+        <li>I might have a Kafkaesque obsession with the world — though I'm having some second thoughts on that after seeing where the world is headed.</li>
+        <li>Writing helps tickle the squishy part of my brain. It also helps me tolerate being a living, breathing human.</li>
+        <li>I'm very much interested in the art of selling, but have only ever come close to selling my soul.</li>
+        <li>Currently exploring the world of vibe coding.</li>
+      </ul>
+
+      <p>Short-form content is my forte — but hey, leave me alone with my laptop long enough and you might end up reading a 2000-word blog about memes, culture, books, movies, and whatnot the next day.</p>
+
+      <p class="about-links">Find me on <a href="https://rakshmulimani.medium.com/" target="_blank" rel="noopener noreferrer">Medium</a>, <a href="https://rakshata14311.substack.com/" target="_blank" rel="noopener noreferrer">Substack</a>, and <a href="https://www.linkedin.com/in/rakshata-mulimani-b79439215/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.</p>
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .placeholder-section {
+  .about-page {
     padding: 56px 0 96px;
   }
 
   h1 {
     font-size: 40px;
-    margin-bottom: 24px;
-  }
-
-  .placeholder-note {
-    font-family: var(--font-sans);
-    font-size: 13px;
-    color: var(--accent);
-    background: var(--accent-tint);
-    padding: 16px 20px;
-    border-radius: 3px;
-    line-height: 1.6;
     margin-bottom: 32px;
   }
 
-  .draft-text {
+  .about-body {
     font-family: var(--font-serif);
-    font-size: 18px;
-    color: var(--muted);
-    padding-top: 24px;
+    font-size: 19px;
+    line-height: 1.75;
+  }
+
+  .about-body p {
+    margin-bottom: 24px;
+  }
+
+  .quirk-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+  }
+
+  .quirk-list li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 18px;
+  }
+
+  .quirk-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .about-links a {
+    color: var(--accent);
+    border-bottom: 1px solid transparent;
+  }
+
+  .about-links a:hover {
+    border-bottom-color: var(--accent);
   }
 </style>
