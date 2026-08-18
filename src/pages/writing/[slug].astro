@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allWriting = await getCollection('writing');
+  return allWriting.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const { title, description, category, platform, readingTime, coverImage, date, originalUrl } = entry.data;
+
+const formattedDate = new Date(date).toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+});
+
+const allWriting = await getCollection('writing');
+const related = allWriting
+  .filter((e) => e.slug !== entry.slug && e.data.category === category)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout title={title} description={description} image={coverImage}>
+  <article class="wrap article-page">
+    <a href="/writing" class="back-link">&larr; Back to Writing</a>
+
+    <header class="article-header reading-column">
+      <p class="eyebrow">{category}</p>
+      <h1 class="article-title">{title}</h1>
+      <p class="article-description">{description}</p>
+      <p class="meta">{formattedDate} &middot; {readingTime} &middot; {platform} &middot; Rakshita Mulimani</p>
+    </header>
+
+    {coverImage && (
+      <div class="cover-wrap reading-column">
+        <img src={coverImage} alt="" />
+      </div>
+    )}
+
+    <div class="reading-column article-body">
+      <Content />
+    </div>
+
+    <div class="reading-column origin-note">
+      <p>Originally published on {platform}. <a href={originalUrl} target="_blank" rel="noopener noreferrer">Read it there &rarr;</a></p>
+    </div>
+
+    {related.length > 0 && (
+      <section class="reading-column more-section">
+        <p class="section-label">More from Rakshita</p>
+        <ul class="related-list">
+          {related.map((r) => (
+            <li>
+              <a href={`/writing/${r.slug}`}>{r.data.title}</a>
+              <span class="meta">{r.data.readingTime}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .article-page {
+    padding: 40px 0 80px;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .article-header {
+    margin-bottom: 32px;
+  }
+
+  .article-title {
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.2;
+    margin: 12px 0 16px;
+  }
+
+  .article-description {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .cover-wrap {
+    margin-bottom: 40px;
+  }
+
+  .cover-wrap img {
+    width: 100%;
+    border-radius: 3px;
+  }
+
+  .article-body {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    line-height: 1.8;
+  }
+
+  .article-body :global(p) {
+    margin-bottom: 26px;
+  }
+
+  .article-body :global(h3) {
+    font-size: 24px;
+    margin: 40px 0 20px;
+  }
+
+  .article-body :global(blockquote) {
+    border-left: 2px solid var(--accent);
+    padding-left: 24px;
+    font-style: italic;
+    color: var(--ink);
+    margin: 32px 0;
+  }
+
+  .article-body :global(ul) {
+    margin: 0 0 26px;
+    padding-left: 24px;
+  }
+
+  .article-body :global(li) {
+    margin-bottom: 8px;
+  }
+
+  .origin-note {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .origin-note p {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .origin-note a {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .more-section {
+    margin-top: 56px;
+  }
+
+  .section-label {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .related-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .related-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 16px 0;
+    border-top: 1px solid var(--hairline);
+    font-family: var(--font-serif);
+    font-size: 17px;
+  }
+
+  .related-list a:hover {
+    color: var(--accent);
+  }
+</style>

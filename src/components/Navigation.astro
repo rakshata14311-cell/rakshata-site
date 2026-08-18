@@ -1,0 +1,80 @@
+---
+const navItems = [
+  { label: 'Writing', href: '/writing' },
+  { label: 'Work', href: '/work' },
+  { label: 'About', href: '/about' },
+];
+---
+
+<header class="nav-header">
+  <div class="wrap nav-inner">
+    <a href="/" class="site-name">Rakshita Mulimani</a>
+    <nav aria-label="Primary">
+      <ul class="nav-list">
+        {navItems.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+        <li class="contact-link"><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav-header {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .site-name {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 17px;
+    letter-spacing: 0.01em;
+  }
+
+  .nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .nav-list a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav-list a:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  .contact-link a {
+    color: var(--muted);
+  }
+
+  @media (max-width: 560px) {
+    .nav-list {
+      gap: 18px;
+    }
+    .nav-list a {
+      font-size: 12px;
+    }
+  }
+</style>

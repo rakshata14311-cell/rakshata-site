@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FeaturedArticle from '../components/FeaturedArticle.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const allWriting = await getCollection('writing');
+const sorted = allWriting.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const featured = sorted.filter((entry) => entry.data.featured);
+const [lead, ...restFeatured] = featured;
+
+const archivePreview = sorted.filter((entry) => !entry.data.featured).slice(0, 4);
+---
+
+<BaseLayout title="Rakshita Mulimani">
+
+  <section class="hero wrap">
+    <h1 class="hero-headline">Mostly zoned out.<br />Occasionally putting it into words.</h1>
+    <p class="hero-sub">Essays on existence, brand culture, books, and the odd bee sting. Writing first — everything else is a footnote.</p>
+  </section>
+
+  <section class="wrap section">
+    <p class="section-label">Featured writing</p>
+    {lead && <FeaturedArticle entry={lead} size="large" />}
+    <div class="featured-grid">
+      {restFeatured.map((entry) => (
+        <FeaturedArticle entry={entry} size="regular" />
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="section-header">
+      <p class="section-label">From the archive</p>
+      <a href="/writing" class="see-all">See all writing &rarr;</a>
+    </div>
+    <div class="reading-column archive-list">
+      {archivePreview.map((entry) => (
+        <ArticleCard entry={entry} />
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap work-strip">
+    <p>Also writing commercially — <a href="/work">HomeTriangle &rarr;</a></p>
+  </section>
+
+  <section class="wrap section about-preview">
+    <p class="section-label">About</p>
+    <p class="about-text">Rakshita Mulimani writes essays, stories, and culture criticism — and occasionally professional copy along the way.</p>
+    <a href="/about" class="see-all">Read more &rarr;</a>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 72px 0 56px;
+  }
+
+  .hero-headline {
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    max-width: 700px;
+  }
+
+  .hero-sub {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 20px;
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  .section {
+    padding: 48px 0;
+  }
+
+  .section-label {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 32px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .section-header .section-label {
+    margin-bottom: 0;
+  }
+
+  .see-all {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .archive-list {
+    margin-top: 24px;
+  }
+
+  .work-strip {
+    padding: 28px 0;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .work-strip p {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .work-strip a {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .about-text {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 520px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 780px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-links">
+      <a href="https://rakshmulimani.medium.com/" target="_blank" rel="noopener noreferrer">Medium</a>
+      <a href="https://rakshata14311.substack.com/" target="_blank" rel="noopener noreferrer">Substack</a>
+      <a href="#" rel="noopener noreferrer">LinkedIn</a>
+      <a href="/contact">Email</a>
+    </div>
+    <div class="footer-meta">
+      <p>Rakshita Mulimani &copy; {year}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--hairline);
+    padding: 40px 0;
+    margin-top: 96px;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-links a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .footer-links a:hover {
+    color: var(--accent);
+  }
+
+  .footer-meta p {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--muted);
+  }
+</style>

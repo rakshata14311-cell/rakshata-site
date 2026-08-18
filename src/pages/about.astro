@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="About Rakshita Mulimani.">
+  <section class="wrap reading-column placeholder-section">
+    <h1>About</h1>
+    <p class="placeholder-note">This page is a placeholder. It's due for Phase 9 — it needs your actual voice: who you are, what you write about, why, and what you're curious about. Nothing invented sits here on purpose.</p>
+    <hr class="hairline" />
+    <p class="draft-text">Rakshita Mulimani is a writer and copywriter. More coming soon.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .placeholder-section {
+    padding: 56px 0 96px;
+  }
+
+  h1 {
+    font-size: 40px;
+    margin-bottom: 24px;
+  }
+
+  .placeholder-note {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--accent);
+    background: var(--accent-tint);
+    padding: 16px 20px;
+    border-radius: 3px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .draft-text {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    color: var(--muted);
+    padding-top: 24px;
+  }
+</style>

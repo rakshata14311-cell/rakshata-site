@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const workEntries = await getCollection('work');
+const sorted = workEntries.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Work" description="Commercial content writing by Rakshita Mulimani for HomeTriangle.">
+  <section class="wrap header-section">
+    <h1>Work</h1>
+    <p class="intro">Commercial writing for HomeTriangle, a home services platform. Practical, consumer-facing content — a different register from the essays.</p>
+  </section>
+
+  <section class="wrap reading-column">
+    {sorted.map((entry) => (
+      <a href={entry.data.url} target="_blank" rel="noopener noreferrer" class="work-item">
+        <h3>{entry.data.title}</h3>
+        <p class="excerpt">{entry.data.description}</p>
+        <p class="meta">HomeTriangle &middot; {new Date(entry.data.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</p>
+      </a>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .header-section {
+    padding: 56px 0 32px;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  .intro {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 16px;
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  .work-item {
+    display: block;
+    padding: 24px 0;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .work-item h3 {
+    font-size: 19px;
+    margin-bottom: 8px;
+  }
+
+  .work-item:hover h3 {
+    color: var(--accent);
+  }
+
+  .excerpt {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 10px;
+    max-width: 56ch;
+  }
+</style>
