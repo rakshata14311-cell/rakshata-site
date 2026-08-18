@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const readingEntries = await getCollection('reading');
+const sorted = readingEntries.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Reading" description="Websites and publications Rakshata reads, learns from, and admires.">
+  <section class="wrap reading-column reading-page">
+    <h1>Reading</h1>
+    <p class="intro">Places I go to learn about the world. Corners of the internet worth keeping. This list will grow.</p>
+
+    <ul class="reading-list">
+      {sorted.map((entry) => (
+        <li>
+          <a href={entry.data.url} target="_blank" rel="noopener noreferrer" class="reading-item">
+            <h2>{entry.data.name}</h2>
+            <p class="note">{entry.data.note}</p>
+            <span class="visit">Visit &rsaquo;</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .reading-page {
+    padding: 56px 0 96px;
+  }
+
+  h1 {
+    font-size: 40px;
+    margin-bottom: 16px;
+  }
+
+  .intro {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 40px;
+    max-width: 460px;
+    line-height: 1.6;
+  }
+
+  .reading-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .reading-item {
+    display: block;
+    padding: 28px 0;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .reading-item h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .reading-item .note {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin-bottom: 12px;
+    max-width: 60ch;
+  }
+
+  .reading-item .visit {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .reading-item:hover h2 {
+    color: var(--accent);
+  }
+</style>

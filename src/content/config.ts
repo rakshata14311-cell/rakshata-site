@@ -18,7 +18,7 @@ const writing = defineCollection({
   }),
 });
 
-// Professional / commercial writing. Light by design — just enough to
+// Professional / commercial writing. Light by design, just enough to
 // link out honestly, no invented case-study metrics.
 const work = defineCollection({
   type: 'data',
@@ -30,4 +30,16 @@ const work = defineCollection({
   }),
 });
 
-export const collections = { writing, work };
+// Reading: sites and publications Rakshata learns from and admires.
+// A personal blogroll. Add one file, it appears on the Reading page.
+const reading = defineCollection({
+  type: 'data',
+  schema: z.object({
+    name: z.string(),
+    url: z.string().url(),
+    note: z.string(),
+    order: z.number().default(99),
+  }),
+});
+
+export const collections = { writing, work, reading };
