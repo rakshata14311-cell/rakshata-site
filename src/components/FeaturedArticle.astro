@@ -5,7 +5,7 @@ interface Props {
 }
 
 const { entry, size = 'regular' } = Astro.props;
-const { title, description, category, platform, readingTime, coverImage, date } = entry.data;
+const { title, description, category, platform, readingTime, date } = entry.data;
 
 const formattedDate = new Date(date).toLocaleDateString('en-US', {
   month: 'short',
@@ -14,11 +14,6 @@ const formattedDate = new Date(date).toLocaleDateString('en-US', {
 ---
 
 <a href={`/writing/${entry.slug}`} class={`featured-card ${size}`}>
-  {coverImage && (
-    <div class="image-wrap">
-      <img src={coverImage} alt="" loading="lazy" />
-    </div>
-  )}
   <div class="text-wrap">
     <p class="eyebrow">{category}</p>
     <h3 class="title">{title}</h3>
@@ -33,47 +28,44 @@ const formattedDate = new Date(date).toLocaleDateString('en-US', {
   }
 
   .featured-card.large {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 40px;
-    align-items: center;
-    margin-bottom: 64px;
-  }
-
-  .featured-card.large .image-wrap img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 3px;
+    padding: 40px;
+    background: var(--accent-tint);
+    border-radius: 4px;
+    margin-bottom: 40px;
+    transition: transform 0.2s ease;
   }
 
   .featured-card.large .title {
-    font-size: 34px;
-    line-height: 1.2;
-    margin: 10px 0 16px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(30px, 4.5vw, 46px);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    margin: 14px 0 20px;
+    max-width: 18ch;
   }
 
   .featured-card.large .excerpt {
     font-family: var(--font-serif);
-    font-size: 17px;
+    font-size: 18px;
     line-height: 1.6;
-    color: var(--muted);
-    margin: 0 0 16px;
-    max-width: 44ch;
+    color: var(--ink);
+    margin: 0 0 20px;
+    max-width: 48ch;
   }
 
-  .featured-card.regular .image-wrap img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 3px;
-    margin-bottom: 16px;
+  .featured-card.regular {
+    padding-top: 24px;
+    border-top: 2px solid var(--ink);
   }
 
   .featured-card.regular .title {
-    font-size: 20px;
-    line-height: 1.3;
-    margin: 8px 0 10px;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 1.25;
+    margin: 10px 0 12px;
+    transition: color 0.2s ease;
   }
 
   .featured-card:hover .title {
@@ -82,12 +74,7 @@ const formattedDate = new Date(date).toLocaleDateString('en-US', {
 
   @media (max-width: 720px) {
     .featured-card.large {
-      grid-template-columns: 1fr;
-      gap: 20px;
-      margin-bottom: 40px;
-    }
-    .featured-card.large .title {
-      font-size: 26px;
+      padding: 28px;
     }
   }
 </style>

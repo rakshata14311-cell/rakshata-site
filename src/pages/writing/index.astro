@@ -4,25 +4,61 @@ import ArticleCard from '../../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
 
 const allWriting = await getCollection('writing');
-const sorted = allWriting.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Deliberate theme order: essays lead (the core), then culture, stories, books.
+// Each theme carries a short editorial line so the section reads as voice,
+// not just a database label. Add a category here and it appears automatically.
+const themes = [
+  {
+    name: 'Essays',
+    blurb: 'Existence, entropy, suffering, and other things I think about at 2am.',
+  },
+  {
+    name: 'Culture & Brands',
+    blurb: 'What advertising, rivalry, and marketing reveal about all of us.',
+  },
+  {
+    name: 'Stories',
+    blurb: 'Small personal moments, told properly.',
+  },
+  {
+    name: 'Books',
+    blurb: 'The ones that rearranged something in my head.',
+  },
+];
+
+const byTheme = themes.map((theme) => ({
+  ...theme,
+  pieces: allWriting
+    .filter((entry) => entry.data.category === theme.name)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
+}));
 ---
 
 <BaseLayout title="Writing" description="Essays, stories, culture writing, and book reviews by Rakshata.">
   <section class="wrap header-section">
     <h1>Writing</h1>
-    <p class="intro">Everything I've written, in one place. Essays, stories, a few book obsessions, and the odd rant about brand rivalries. Filters and search are coming; for now, scroll.</p>
+    <p class="intro">Everything I've written, grouped by what it's about. Four kinds of thinking: essays, culture and brands, stories, and books. Newest sits at the top of each.</p>
   </section>
 
-  <section class="wrap reading-column">
-    {sorted.map((entry) => (
-      <ArticleCard entry={entry} />
-    ))}
-  </section>
+  {byTheme.map((theme) => theme.pieces.length > 0 && (
+    <section class="wrap theme-section" id={theme.name.toLowerCase().replace(/[^a-z]+/g, '-')}>
+      <div class="theme-head reading-column">
+        <h2 class="theme-name">{theme.name}</h2>
+        <p class="theme-blurb">{theme.blurb}</p>
+      </div>
+      <div class="reading-column">
+        {theme.pieces.map((entry, i) => (
+          <ArticleCard entry={entry} index={i} />
+        ))}
+      </div>
+    </section>
+  ))}
 </BaseLayout>
 
 <style>
   .header-section {
-    padding: 56px 0 32px;
+    padding: 56px 0 24px;
   }
 
   h1 {
@@ -34,7 +70,33 @@ const sorted = allWriting.sort((a, b) => b.data.date.valueOf() - a.data.date.val
     font-size: 14px;
     color: var(--muted);
     margin-top: 16px;
-    max-width: 480px;
+    max-width: 500px;
     line-height: 1.6;
+  }
+
+  .theme-section {
+    padding: 40px 0 8px;
+  }
+
+  .theme-head {
+    margin-bottom: 8px;
+  }
+
+  .theme-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .theme-blurb {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--muted);
+    margin-top: 8px;
+    line-height: 1.5;
   }
 </style>

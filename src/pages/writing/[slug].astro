@@ -40,7 +40,7 @@ const related = allWriting
 
     {coverImage && (
       <div class="cover-wrap reading-column">
-        <img src={coverImage} alt="" />
+        <img src={coverImage} alt="" onerror="this.parentElement.style.display='none'" />
       </div>
     )}
 

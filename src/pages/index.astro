@@ -36,8 +36,8 @@ const archivePreview = sorted.filter((entry) => !entry.data.featured).slice(0, 4
       <a href="/writing" class="see-all">See all writing &rarr;</a>
     </div>
     <div class="reading-column archive-list">
-      {archivePreview.map((entry) => (
-        <ArticleCard entry={entry} />
+      {archivePreview.map((entry, i) => (
+        <ArticleCard entry={entry} index={i} />
       ))}
     </div>
   </section>
